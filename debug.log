@@ -1,0 +1,4 @@
+[0106/140041.836:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\hfranca\AppData\Local\Temp\scoped_dir116212_29205\Crashpad\reports\89311ea4-ba77-4475-8aa5-fb2e0a0f1c1f.dmp: O arquivo já está sendo usado por outro processo. (0x20)
+[0106/140104.162:ERROR:process_info.cc(359)] UncheckedAllocate
+[0106/140114.108:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: O pipe foi finalizado. (0x6D)
+[0106/140119.526:ERROR:process_info.cc(359)] UncheckedAllocate
