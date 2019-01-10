@@ -16,23 +16,29 @@ public class Recursos {
 
 	// Dentro de Recursos
 	public static void quantidadeDeRecursos(WebDriver driver) {
-		WebElement madeira = driver.findElement(By.id("l1"));
-		WebElement barro = driver.findElement(By.id("l2"));
-		WebElement ferro = driver.findElement(By.id("l3"));
-		WebElement cereal = driver.findElement(By.id("l4"));
 
-		setArvoreDisponivel(Integer.parseInt(madeira.getText()));
-		setBarroDisponivel(Integer.parseInt(barro.getText()));
-		setFerroDisponivel(Integer.parseInt(ferro.getText()));
-		setCerealDisponivel(Integer.parseInt(cereal.getText()));
+		try {
+			WebElement madeira = driver.findElement(By.id("l1"));
+			WebElement barro = driver.findElement(By.id("l2"));
+			WebElement ferro = driver.findElement(By.id("l3"));
+			WebElement cereal = driver.findElement(By.id("l4"));
 
-		System.out.println("\n------------------------------------------------------------------------------------------------------------------------------------------------\n ");
-		System.out.println("\tRecursos na Aldeia \n ");
-		System.out.println("\tMadeira: " + getArvoreDisponivel());
-		System.out.println("\tBarro: " + getBarroDisponivel());
-		System.out.println("\tFerro: " + getFerroDisponivel());
-		System.out.println("\tCereal: " + getCerealDisponivel());
-		System.out.println("\n------------------------------------\n ");
+			setArvoreDisponivel(Integer.parseInt(madeira.getText()));
+			setBarroDisponivel(Integer.parseInt(barro.getText()));
+			setFerroDisponivel(Integer.parseInt(ferro.getText()));
+			setCerealDisponivel(Integer.parseInt(cereal.getText()));
+
+			System.out.println(
+					"\n------------------------------------------------------------------------------------------------------------------------------------------------\n ");
+			System.out.println("\tRecursos na Aldeia \n ");
+			System.out.println("\tMadeira: " + getArvoreDisponivel());
+			System.out.println("\tBarro: " + getBarroDisponivel());
+			System.out.println("\tFerro: " + getFerroDisponivel());
+			System.out.println("\tCereal: " + getCerealDisponivel());
+			System.out.println("\n------------------------------------\n ");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 

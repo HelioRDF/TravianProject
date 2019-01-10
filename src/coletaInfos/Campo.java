@@ -53,6 +53,7 @@ public class Campo {
 	}
 
 	public static Long tempoDeMelhoria(WebDriver driver) {
+
 		List<WebElement> duracaoSpan = driver.findElements(By.tagName("span"));
 		long minutosEspera = 0l;
 
@@ -66,18 +67,23 @@ public class Campo {
 
 			if (obj.getText().length() == 7) {
 
-				System.out.println("\n------------------------------------\nTempo(Valor): " + tempoEspera);
-				System.out.println("Class: " + classeNoObj + "\n------------------------------------\n");
-				if (classeNoObj.contains("value")) {
-					String encontraMinutosList[] = new String[3];
-					encontraMinutosList = tempoEspera.split(":");
-					minutosEspera = Long.parseLong(encontraMinutosList[1]);
-					minutosEspera = (minutosEspera * 60 * 1000) + 60000;
-					LocalTime horainicio = LocalTime.now();
-					System.out.println("Hora: " + horainicio);
-					System.out.println("Tempo de espera milisegundos: " + minutosEspera);
-					System.out.println("Tempo de espera minutos: " + minutosEspera/1000/60+" Minutos");
-					break;
+				try {
+					System.out.println("\n------------------------------------\nTempo(Valor): " + tempoEspera);
+					System.out.println("Class: " + classeNoObj + "\n------------------------------------\n");
+					if (classeNoObj.contains("value")) {
+						String encontraMinutosList[] = new String[3];
+						encontraMinutosList = tempoEspera.split(":");
+						minutosEspera = Long.parseLong(encontraMinutosList[1]);
+						minutosEspera = (minutosEspera * 60 * 1000) + 60000;
+						LocalTime horainicio = LocalTime.now();
+						System.out.println("Hora: " + horainicio);
+						System.out.println("Tempo de espera milisegundos: " + minutosEspera);
+						System.out.println("Tempo de espera minutos: " + minutosEspera / 1000 / 60 + " Minutos");
+						break;
+					}
+				} catch (Exception e) {
+					System.out.println("Problemas no tempoDeMelhoria");
+
 				}
 			}
 		}
