@@ -9,8 +9,8 @@ import InfosTravian.Links;
 
 public class Entrar {
 	
-	static final String loginT = "furioso"; // ts7
-	static final String senhaT =  "killer17";
+	static final String loginT = "furioso01"; // ts7
+	static final String senhaT =  "killer";
 	
 	public static void login(WebDriver driver){
 		driver.get(Links.getLinkpaginalogin());	
