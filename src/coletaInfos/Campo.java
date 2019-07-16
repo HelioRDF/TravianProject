@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import InfosTravian.Log;
+
 public class Campo {
 
 	private String nivelCampo;
@@ -52,7 +54,7 @@ public class Campo {
 		}
 	}
 
-	public static Long tempoDeMelhoria(WebDriver driver) {
+	public static Long tempoDeMelhoria(WebDriver driver, String aldeia) {
 
 		List<WebElement> duracaoSpan = driver.findElements(By.tagName("span"));
 		long minutosEspera = 0l;
@@ -79,6 +81,13 @@ public class Campo {
 						System.out.println("Hora: " + horainicio);
 						System.out.println("Tempo de espera milisegundos: " + minutosEspera);
 						System.out.println("Tempo de espera minutos: " + minutosEspera / 1000 / 60 + " Minutos");
+						String infos="Hora: "+horainicio+ "\t --- Min de espera:"+(minutosEspera/ 1000 / 60)+ " Minutos";
+						Log.geraLog(aldeia+".txt", infos);
+						
+						//diminui o tempo de espera
+						if(minutosEspera>149000) {
+							minutosEspera=149000;
+						}
 						break;
 					}
 				} catch (Exception e) {

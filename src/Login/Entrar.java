@@ -9,8 +9,8 @@ import InfosTravian.Links;
 
 public class Entrar {
 	
-	static final String loginT = "furioso01"; // ts7
-	static final String senhaT =  "killer";
+	static final String loginT = "furioso"; // https://ts4.lusobrasileiro.travian.com
+	static final String senhaT =  "killer17";
 	
 	public static void login(WebDriver driver){
 		driver.get(Links.getLinkpaginalogin());	
@@ -24,8 +24,8 @@ public class Entrar {
 		WebElement campoDeSenha = driver.findElement(By.name("password"));
 		campoDeSenha.sendKeys(senhaT);
 		
-		WebElement checkBoxNetLenta = driver.findElement(By.id("lowRes"));
-		checkBoxNetLenta.click();
+		//WebElement checkBoxNetLenta = driver.findElement(By.id("lowRes"));
+		//checkBoxNetLenta.click();
 		
 		campoDeTexto.submit();
 

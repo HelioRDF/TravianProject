@@ -22,6 +22,7 @@ public class Recursos {
 			WebElement barro = driver.findElement(By.id("l2"));
 			WebElement ferro = driver.findElement(By.id("l3"));
 			WebElement cereal = driver.findElement(By.id("l4"));
+		
 
 			setArvoreDisponivel(Integer.parseInt(madeira.getText()));
 			setBarroDisponivel(Integer.parseInt(barro.getText()));
@@ -54,10 +55,19 @@ public class Recursos {
 			Campo objCampo = new Campo();
 
 			String nivelCampoInfo = obj.getAttribute("alt");
+			
 			String array[] = new String[2];
 			array = nivelCampoInfo.split("Nível");
 			Integer numNivel = Integer.parseInt(array[1].trim());
-
+			String campo = array[0].trim();
+			System.out.println("\nAntes -- Campoo:"+campo+" Nvl:"+numNivel);
+			
+			//Diminui a prioridade para campo de cereais
+			if(campo.toString().equalsIgnoreCase("Campo de cereais") && numNivel>2) {
+				numNivel=numNivel+2;
+			}
+			System.out.println("-- Campoo:"+campo+" Nvl:"+numNivel);
+		
 			objCampo.setNivelCampo(nivelCampoInfo);
 			objCampo.setLinkCampo(obj.getAttribute("href"));
 			objCampo.setNivelCampoAux(numNivel);
@@ -78,7 +88,7 @@ public class Recursos {
 			System.out.println("Prioridade: " + obj.getPrioridade());
 			System.out.println("Link: " + obj.getLinkCampo() + "\n");
 
-			if (prioridade == 1) {
+			if (prioridade == 1 ) {
 				link = obj.getLinkCampo();
 			}
 			prioridade++;

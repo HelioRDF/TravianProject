@@ -9,7 +9,8 @@ import org.openqa.selenium.WebElement;
 
 import InfosTravian.AldeiasFarme;
 import InfosTravian.JogadoresFarme;
-import Main.Main;
+
+
 
 public class RankJogadores {
 
@@ -18,7 +19,7 @@ public class RankJogadores {
 		try {
 			driver.get(link);
 			List<WebElement> jogadores = driver.findElements(By.className("pla"));
-			ArrayList<JogadoresFarme> listaJogadores = new ArrayList();
+			ArrayList<JogadoresFarme> listaJogadores = new ArrayList<JogadoresFarme>();
 
 			for (WebElement obj : jogadores) {
 				JogadoresFarme objJogadores = new JogadoresFarme();
@@ -27,7 +28,7 @@ public class RankJogadores {
 				objJogadores.setNomeJogador(nomeJogador);
 				objJogadores.setLinkJogador(linkJogador);
 				listaJogadores.add(objJogadores);
-				Main.esperar(100);
+			
 			}
 
 			for (JogadoresFarme jogadoresFarme : listaJogadores) {

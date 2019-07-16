@@ -2,9 +2,9 @@ package InfosTravian;
 
 public class Links {
 
-	protected static int idPagina=130;
-	protected static final String linkPaginaLogin = "https://ts29.lusobrasileiro.travian.com/";
-	protected static final String linkRankPaginaJogadores = "https://ts29.lusobrasileiro.travian.com/statistiken.php?id=0&page="+idPagina;
+	protected static int idPagina=10;
+	protected static final String linkPaginaLogin = "https://tx3.lusobrasileiro.travian.com/";
+	protected static final String linkRankPaginaJogadores = "https://tx3.lusobrasileiro.travian.com/statistiken.php?id=0&page="+idPagina;
 
 
 	/**
