@@ -64,15 +64,16 @@ public class Recursos {
 			
 			//Diminui a prioridade para campo de cereais
 			if(campo.toString().equalsIgnoreCase("Campo de cereais") && numNivel>2) {
-				numNivel=numNivel+2;
+				numNivel=numNivel+3;
 			}
-			System.out.println("-- Campoo:"+campo+" Nvl:"+numNivel);
-		
+			System.out.println("-- Campoo:"+campo+" Nvl:"+numNivel);		
 			objCampo.setNivelCampo(nivelCampoInfo);
 			objCampo.setLinkCampo(obj.getAttribute("href"));
 			objCampo.setNivelCampoAux(numNivel);
+			if(numNivel==10) {
+				continue;
+			}			
 			camposList.add(objCampo);
-
 		}
 		return camposList;
 	}

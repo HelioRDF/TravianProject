@@ -10,14 +10,15 @@ import org.openqa.selenium.WebElement;
 import InfosTravian.AldeiasFarme;
 import InfosTravian.JogadoresFarme;
 
-
-
 public class RankJogadores {
 
 	public static void listaDeJogadores(String link, WebDriver driver) {
 
 		try {
 			driver.get(link);
+			System.out.println("\n\n\n\n\n\n---------------------------------------");
+			System.out.println("Link:" + link);
+			System.out.println("---------------------------------------\\n\\n\\n\\n\\n\\n");
 			List<WebElement> jogadores = driver.findElements(By.className("pla"));
 			ArrayList<JogadoresFarme> listaJogadores = new ArrayList<JogadoresFarme>();
 
@@ -28,15 +29,12 @@ public class RankJogadores {
 				objJogadores.setNomeJogador(nomeJogador);
 				objJogadores.setLinkJogador(linkJogador);
 				listaJogadores.add(objJogadores);
-			
+
 			}
 
 			for (JogadoresFarme jogadoresFarme : listaJogadores) {
-				System.out.println("\n--------------------\n");
-				System.out.println("Jogador: " + jogadoresFarme.getNomeJogador());
-				System.out.println("Link: " + jogadoresFarme.getLinkJogador());
 
-				identificaAldeias(jogadoresFarme.getLinkJogador(), driver);
+				identificaAldeias(jogadoresFarme.getNomeJogador(), jogadoresFarme.getLinkJogador(), driver);
 			}
 
 		} catch (Exception e) {
@@ -46,41 +44,102 @@ public class RankJogadores {
 
 	}
 
-	public static ArrayList<AldeiasFarme> identificaAldeias(String linkAldeia, WebDriver driver) {
+	public static ArrayList<AldeiasFarme> identificaAldeias(String jogador, String linkJogador, WebDriver driver) {
 		ArrayList<AldeiasFarme> listaDeAldeias = new ArrayList<>();
 		try {
-			driver.get(linkAldeia);
+			driver.get(linkJogador);
 			List<WebElement> aldeias = driver.findElements(By.className("name"));
-
+			String linkAldeia = "";
 			for (WebElement obj : aldeias) {
 
 				List<WebElement> aldeiasLinks = obj.findElements(By.tagName("a"));
 
 				for (WebElement objLinks : aldeiasLinks) {
-					// System.out.println("Obj:"+aldeiasLinks);
-					// System.out.println("Qtd:"+objLinks.getSize());
 					AldeiasFarme aldeia = new AldeiasFarme();
 					aldeia.setLinkAldeia(objLinks.getAttribute("href"));
 					listaDeAldeias.add(aldeia);
-					System.out.println("\nLink:\n" + objLinks.getAttribute("href"));
+					linkAldeia = objLinks.getAttribute("href").toString();
+
 				}
 
 				for (AldeiasFarme aldeia : listaDeAldeias) {
 					driver.get(aldeia.getLinkAldeia());
+
 					List<WebElement> td = driver.findElements(By.tagName("td"));
 
+					Double distanciaLimite = 80d;
+					String distanciaencontrada = "null";
+					boolean distanciaAceitavel = false;
+					boolean alianca = false;
+
 					for (WebElement objTd : td) {
-						System.out.println(objTd.getText());
+
+						if (objTd.getText().contains("CF HELL") || objTd.getText().contains("CF")
+								|| objTd.getText().contains("CF TNT")) {
+							// Adicionar à lista de farm
+							alianca = true;
+						}
+						if (objTd.getText().contains("Campos:")) {
+							String distancia[] = objTd.getText().split("Campos");
+							Double distanciaDouble = Double.parseDouble(distancia[0]);
+							if (distanciaDouble < distanciaLimite) {
+								distanciaAceitavel = true;
+								distanciaencontrada = objTd.getText();
+
+							}
+
+						}
 
 					}
 
+					if (alianca == false && distanciaAceitavel) {
+
+						System.out.println("\n-----------Inicio --------------");
+						System.out.println("\nLink aldeia:\t " + linkAldeia);
+						System.out.println("\nInfo:\t " + distanciaencontrada);
+
+						addFarme(driver);
+					}
 				}
 			}
 
 		} catch (Exception e) {
-			System.out.println("Erro lista de identificaAldeias");
+			// System.out.println("\nErro lista de identificaAldeias");
 		}
 		return listaDeAldeias;
+	}
+
+	public static void addFarme(WebDriver driver) {
+		List<WebElement> elementosBt = driver.findElements(By.tagName("a"));
+		for (WebElement obj : elementosBt) {
+			if (obj.getText().contains("Adicionar à lista de farm")) {
+				WebElement btMelhorar = driver.findElement(By.id(obj.getAttribute("id")));
+
+				btMelhorar.click();
+				System.out.println("Clicou ...");
+				System.out.println("\n----------- --------------\n");
+
+				try {
+					Thread.sleep(3500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				WebElement tropas = driver.findElement(By.name("t1"));
+				tropas.sendKeys("15");
+
+				WebElement btSalvar = driver.findElement(By.name("save"));
+				btSalvar.click();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
+
 	}
 
 }

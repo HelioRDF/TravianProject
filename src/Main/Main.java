@@ -5,35 +5,124 @@ import java.util.ArrayList;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import InfosTravian.Links;
 import Login.Entrar;
 import coletaInfos.Campo;
+import coletaInfos.Edificio;
+import coletaInfos.RankJogadores;
 import coletaInfos.Recursos;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// WebDriver driver = configWebDriver();
+		// verRank();
+		// melhorarCampo();
+		
+		esperar(185000);
+
+		melhorarInfraThread("16755", "27", 5);
+		esperar(85000);
+	
+		melhorarInfraThread("19725", "31", 20);
+		esperar(85000);
+		
+		
+		melhorarInfraThread("19944", "21", 9);
+		esperar(85000);
+
+		
+		melhorarInfraThread("20444", "27", 6);
+		esperar(85000);
+
+		melhorarInfraThread("21050", "37", 12);
+		esperar(85000);
+		
+		
+		melhorarInfraThread("21946", "30", 12);
+		esperar(85000);
+
+		melhorarInfraThread("22371", "20", 8);
+		esperar(85000);
+		
+		
+		melhorarInfraThread("22789", "20", 10);
+		esperar(85000);
+
+	}
+
+	// Melhora a infraestrutura da Aldeia
+	public static void melhorarInfraThread(String idAldeia, String idEdificio, int repetir) {
+		String linkEdificio = "https://tx3.lusobrasileiro.travian.com/build.php?newdid=" + idAldeia + "&id="
+				+ idEdificio;
+
+		new Thread() {
+			@Override
+			public void run() {
+
+				int num = repetir;
+				WebDriver driver;
+				while (num != 0) {
+					driver = configWebDriver();
+					try {
+						Entrar.login(driver);
+						esperar(1000);
+						driver.get(linkEdificio);
+						Long tempoMin = Edificio.tempoDeMelhoria(driver, linkEdificio, idAldeia);
+						Edificio.confirmarMelhoriaInfra(driver);
+						driver.close();
+						esperar(tempoMin);
+						num--;
+
+					} catch (Exception e) {
+						System.out.println("Não foi possível confirmar melhoria");
+						driver.close();
+						esperar(120000);
+
+					}
+
+				}
+			}
+		}.start();
+
+	}
+
+	// Visualizar Rank e add farmes
+	public static void verRank() {
+
+		WebDriver driver;
 		// driver.manage().window().setPosition(new Point(-2000, 0));
 		try {
-			// Entrar.login(driver);
-			// RankJogadores.listaDeJogadores(Links.getLinkrankpaginajogadores(), driver);
-			ArrayList<String> aldeias = new ArrayList<String>();
-			aldeias.add("https://tx3.lusobrasileiro.travian.com/dorf1.php?newdid=2071&");//A
-			aldeias.add("https://tx3.lusobrasileiro.travian.com/dorf1.php?newdid=15676&");//B
-			
-			for (String aldeia : aldeias) {
-				String idAldeia[] = new String[2];
-				idAldeia=aldeia.split("id=");
-				iniciaTarefaThread(aldeia, idAldeia[1].toString());
-				esperar(240000);
-			}
-			
-			
-			//iniciaTarefaThread("https://tx3.lusobrasileiro.travian.com/dorf1.php?newdid=2071&");// A
-			// iniciaTarefaThread("https://tx3.lusobrasileiro.travian.com/dorf1.php?newdid=15676&");//B
+			int idPAgina = 58;
+			driver = configWebDriver();
+			while (idPAgina >= 38) {
 
+				Entrar.login(driver);
+				RankJogadores.listaDeJogadores(Links.getLinkrankpaginajogadores() + idPAgina, driver);
+				System.out.println("\n\n\n\n-----------------------------------------------------------------\n\n\n\n");
+				System.out.println("\n\n\n\nLink=" + Links.getLinkrankpaginajogadores() + idPAgina);
+				System.out.println("\n\n\n\n-----------------------------------------------------------------\n\n\n\n");
+				idPAgina--;
+				esperar(2000);
+			}
 		} catch (Exception e) {
 			esperar(10000);
+		}
+	}
+
+	public static void melhorarCampo() {
+		ArrayList<String> aldeias = new ArrayList<String>();
+
+		// aldeias.add("https://tx3.lusobrasileiro.travian.com/dorf1.php?newdid=21946&");
+		// // j
+		aldeias.add("https://tx3.lusobrasileiro.travian.com/dorf1.php?newdid=22789&");// L
+
+		for (String aldeia : aldeias) {
+			String idAldeia[] = new String[2];
+			idAldeia = aldeia.split("id=");
+			System.out.println("\n\n\n\nLink:" + aldeia);
+			iniciaTarefaThread(aldeia, idAldeia[1].toString());
+			esperar(165000);
+
 		}
 	}
 
@@ -54,9 +143,10 @@ public class Main {
 						String link = Recursos.orderCamposNvl(Recursos.verificaNVLCampos(driver));
 						esperar(1000);
 						driver.get(link);
+						System.out.println("\n\n\n\n tarefa - Link:" + link);
 						Campo campo = new Campo();
 						campo.custoMelhoria(driver);
-						Long tempoMin = Campo.tempoDeMelhoria(driver,idAldeia);
+						Long tempoMin = Campo.tempoDeMelhoria(driver, idAldeia);
 						Campo.confirmarMelhoriaCampo(driver);
 						driver.close();
 						esperar(tempoMin);
@@ -64,7 +154,7 @@ public class Main {
 					} catch (Exception e) {
 						System.out.println("Não foi possível confirmar melhoria");
 						driver.close();
-						esperar(4000);
+						esperar(120000);
 
 					}
 
