@@ -1,4 +1,4 @@
-package coletaInfos;
+package Aldeias;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 
 import InfosTravian.Log;
 
-public class Campo {
+public class Edificio {
 
 	private String nivelCampo;
 	private Integer nivelCampoAux;
@@ -44,17 +44,19 @@ public class Campo {
 
 	}
 
-	public static void confirmarMelhoriaCampo(WebDriver driver) {
+	public static void confirmarMelhoriaInfra(WebDriver driver) {
 		List<WebElement> elementosBt = driver.findElements(By.tagName("button"));
 		for (WebElement obj : elementosBt) {
 			if (obj.getText().contains("Melhorar para nível")) {
 				WebElement btMelhorar = driver.findElement(By.id(obj.getAttribute("id")));
+
+				// System.out.println("Aqui:"+ obj.getAttribute("id"));
 				btMelhorar.click();
 			}
 		}
 	}
 
-	public static Long tempoDeMelhoria(WebDriver driver, String aldeia) {
+	public static Long tempoDeMelhoria(WebDriver driver, String estrutura, String idAldeia) {
 
 		List<WebElement> duracaoSpan = driver.findElements(By.tagName("span"));
 		long minutosEspera = 0l;
@@ -78,19 +80,17 @@ public class Campo {
 						minutosEspera = Long.parseLong(encontraMinutosList[1]);
 						minutosEspera = (minutosEspera * 60 * 1000) + 60000;
 						LocalTime horainicio = LocalTime.now();
-						// diminui o tempo de espera
-						if (minutosEspera > 3200000) {
-							minutosEspera = 3200000;
-						}
-						if (minutosEspera < 350000) {
-							minutosEspera = 350000;
+		
+						if (minutosEspera < 400000) {
+							minutosEspera = 400000;
 						}
 						System.out.println("Hora: " + horainicio);
 						System.out.println("Tempo de espera milisegundos: " + minutosEspera);
 						System.out.println("Tempo de espera minutos: " + minutosEspera / 1000 / 60 + " Minutos");
 						String infos = "Hora: " + horainicio + "\t --- Min de espera:" + (minutosEspera / 1000 / 60)
 								+ " Minutos";
-						Log.geraLog(aldeia + ".txt", infos);
+
+						Log.geraLog(idAldeia + "-Infra.txt", infos);
 
 						break;
 					}

@@ -1,6 +1,6 @@
-package InfosTravian;
+package Rank;
 
-public class JogadoresFarme {
+public class JogadoresFarme{
 
 	private String nomeJogador;
 	private String linkJogador;

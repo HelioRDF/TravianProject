@@ -1,4 +1,4 @@
-package InfosTravian;
+package Rank;
 
 public class AldeiasFarme {
 
