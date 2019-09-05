@@ -11,7 +11,8 @@ public class Aldeia {
 	private int ferro;
 	private int cereal;
 	private ArrayList<Campo> campos;
-	private boolean melhorar=false;
+	private boolean melhorar=true;
+	private Long tempoEspera;
 	
 	
 	public Aldeia(String nomeAldeia, String idAldeia) {
@@ -19,6 +20,20 @@ public class Aldeia {
 		this.nomeAldeia = nomeAldeia;
 		this.idAldeia = idAldeia;
 	}
+	
+	
+
+	public Long getTempoEspera() {
+		return tempoEspera;
+	}
+
+
+
+	public void setTempoEspera(Long tempoEspera) {
+		this.tempoEspera = tempoEspera;
+	}
+
+
 
 	public String getNomeAldeia() {
 		return nomeAldeia;

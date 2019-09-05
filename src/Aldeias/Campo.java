@@ -22,13 +22,6 @@ public class Campo {
 	private int prioridade;
 	private Long tempo;
 
-	
-	
-
-	
-	
-	
-
 	public int getArvoreCusto() {
 		return arvoreCusto;
 	}
@@ -37,13 +30,9 @@ public class Campo {
 		return nomeCampo;
 	}
 
-
-
 	public void setNomeCampo(String nomeCampo) {
 		this.nomeCampo = nomeCampo;
 	}
-
-
 
 	public void setArvoreCusto(int arvoreCusto) {
 		this.arvoreCusto = arvoreCusto;
@@ -113,21 +102,23 @@ public class Campo {
 		this.tempo = tempo;
 	}
 
-
-	public static void confirmarMelhoriaCampo(String idAldeia, String linkCampo) {
+	public static Long confirmarMelhoriaCampo(String idAldeia, String linkCampo) {
 		Selenium.driver.get(Links.getLinkaldeia() + idAldeia);
 		Tempo.esperar(3000);
 		Selenium.driver.get(linkCampo);
-	List<WebElement> elementosBt = Selenium.driver.findElements(By.tagName("button"));
-	for (WebElement obj : elementosBt) {
-		if (obj.getText().contains("Melhorar para nível")) {
-			WebElement btMelhorar = Selenium.driver.findElement(By.id(obj.getAttribute("id")));
-			btMelhorar.click();
+
+		Long tempoMelhoria = 600000l;
+		List<WebElement> elementosBt = Selenium.driver.findElements(By.tagName("button"));
+		for (WebElement obj : elementosBt) {
+
+			if (obj.getText().contains("Melhorar para nível")) {
+				tempoMelhoria = DadosAldeia.tempoDeMelhoria(idAldeia);
+				WebElement btMelhorar = Selenium.driver.findElement(By.id(obj.getAttribute("id")));
+				btMelhorar.click();
+			}
 		}
+		return tempoMelhoria;
 	}
-
-}
-
 	@Override
 	public String toString() {
 		return "Campo [nomeCampo=" + nomeCampo + ", nivelCampo=" + nivelCampo + ", nivelCampoAux=" + nivelCampoAux
@@ -135,7 +126,5 @@ public class Campo {
 				+ ", ferroCusto=" + ferroCusto + ", cerealCusto=" + cerealCusto + ", prioridade=" + prioridade
 				+ ", tempo=" + tempo + "]";
 	}
-	
-	
 
 }

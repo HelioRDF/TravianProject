@@ -96,9 +96,9 @@ public class DadosAldeia {
 		aldeia.setCampos(camposList);
 		for (Campo obj2 : aldeia.getCampos()) {
 
-			Selenium.driver.get(obj2.getLinkCampo());
-			obj2.setTempo(tempoDeMelhoria( obj2.getLinkCampo(), aldeia.getNomeAldeia()));
-			obj2 = custoMelhorarCampo(obj2);
+			// Selenium.driver.get(obj2.getLinkCampo());
+			// obj2.setTempo(tempoDeMelhoria( obj2.getLinkCampo(), aldeia.getNomeAldeia()));
+			// obj2 = custoMelhorarCampo(obj2);
 
 			System.out.println("\n---------------------------------------------------:\n");
 			System.out.println("Campo:" + obj2.getNomeCampo());
@@ -114,7 +114,7 @@ public class DadosAldeia {
 		}
 	}
 
-		public static Long tempoDeMelhoria( String linkCampo, String nomeAldeia) {
+	public static Long tempoDeMelhoria(String idAldeia) {
 
 		List<WebElement> duracaoSpan = Selenium.driver.findElements(By.tagName("span"));
 		long minutosEspera = 0l;
@@ -144,12 +144,12 @@ public class DadosAldeia {
 						System.out.println("Tempo de espera minutos: " + minutosEspera / 1000 / 60 + " Minutos");
 						String infos = "Hora: " + horainicio + "\t --- Min de espera:" + (minutosEspera / 1000 / 60)
 								+ " Minutos";
-						Log.geraLog(nomeAldeia + ".txt", infos);
+						Log.geraLog(idAldeia + ".txt", infos);
 
 						break;
 					}
 				} catch (Exception e) {
-					System.out.println("Problemas no tempoDeMelhoria");
+					System.out.println("\n\n\nProblemas no tempoDeMelhoria ........... valor setado = 990000");
 					minutosEspera = 990000;
 
 				}
@@ -170,7 +170,7 @@ public class DadosAldeia {
 			prioridade++;
 		}
 		return link;
-	
+
 	}
 
 }

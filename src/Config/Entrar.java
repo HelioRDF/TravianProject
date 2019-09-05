@@ -11,10 +11,10 @@ public class Entrar {
 
 	static final String loginT = "furioso"; 
 	static final String senhaT = "killer17";
+	static WebDriver driver= Selenium.configWebDriver();
 
 	public static void login() {
-		WebDriver driver;
-		driver = Selenium.configWebDriver();
+
 
 		driver.get(Links.getLinkpaginalogin());
 		driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
