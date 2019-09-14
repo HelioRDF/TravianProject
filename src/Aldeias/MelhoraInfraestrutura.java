@@ -1,46 +1,51 @@
 package Aldeias;
 
-import org.openqa.selenium.WebDriver;
-
-import Config.Entrar;
 import Config.Selenium;
 import Config.Tempo;
 
 public class MelhoraInfraestrutura {
 
 	// Melhora a infraestrutura da Aldeia
-	public static void melhorarInfraThread(String idAldeia, String idEdificio, int repetir) {
+	public static Long melhorarInfra(String idAldeia, String idEdificio) {
 		String linkEdificio = "https://tx3.lusobrasileiro.travian.com/build.php?newdid=" + idAldeia + "&id="
 				+ idEdificio;
+		Long tempoMin = 3000l;
 
-		new Thread() {
-			@Override
-			public void run() {
+		try {
 
-				int num = repetir;
-				WebDriver driver;
-				while (num != 0) {
-					driver = Selenium.configWebDriver();
-					try {
-						Entrar.login();
-						Tempo.esperar(1000);
-						driver.get(linkEdificio);
-						Long tempoMin = Edificio.tempoDeMelhoria(driver, linkEdificio, idAldeia);
-						Edificio.confirmarMelhoriaInfra(driver);
-						driver.close();
-						Tempo.esperar(tempoMin);
-						num--;
+			Selenium.driver.get(linkEdificio);
+			System.out.println("Link edificio" + linkEdificio);
+			tempoMin = Edificio.tempoDeMelhoria(Selenium.driver, linkEdificio, idAldeia);
+			Edificio.confirmarMelhoriaInfra();
+			Tempo.esperar(5000, "Aguardando confirmação de melhorarInfra");
 
-					} catch (Exception e) {
-						System.out.println("Não foi possível confirmar melhoria");
-						driver.close();
-						Tempo.esperar(120000);
+		} catch (Exception e) {
+			System.out.println("Não foi possível confirmar melhoria");
+			Tempo.esperar(120000, "Exception em  MelhoraInfraestrutura método melhorarInfra");
 
-					}
+		}
+		return tempoMin;
+	}
 
-				}
-			}
-		}.start();
+	// Melhora a infraestrutura da Aldeia
+	public static Long fazerTropas(String idAldeia, String idEdificio, String tipoTropa, String quantidade) {
+		String linkEdificio = "https://tx3.lusobrasileiro.travian.com/build.php?newdid=" + idAldeia + "&id="
+				+ idEdificio;
+		Long tempoMin = 3000l;
 
+		try {
+
+			Selenium.driver.get(linkEdificio);
+			System.out.println("Link edificio" + linkEdificio);
+
+			Edificio.confirmarTreinamento(tipoTropa, quantidade);
+			Tempo.esperar(5000, "Aguardando confirmação de fazerTropas");
+
+		} catch (Exception e) {
+			System.out.println("Não foi possível fazer Tropas");
+			Tempo.esperar(120000, "Exception em  MelhoraInfraestrutura método fazerTropas");
+
+		}
+		return tempoMin;
 	}
 }

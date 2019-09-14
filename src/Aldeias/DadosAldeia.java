@@ -150,7 +150,7 @@ public class DadosAldeia {
 					}
 				} catch (Exception e) {
 					System.out.println("\n\n\nProblemas no tempoDeMelhoria ........... valor setado = 990000");
-					minutosEspera = 990000;
+					minutosEspera = 60000;
 
 				}
 			}

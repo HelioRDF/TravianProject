@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 
 import Config.Selenium;
 import Config.Tempo;
-import InfosTravian.Links;
 
 public class Campo {
 
@@ -103,22 +102,26 @@ public class Campo {
 	}
 
 	public static Long confirmarMelhoriaCampo(String idAldeia, String linkCampo) {
-		Selenium.driver.get(Links.getLinkaldeia() + idAldeia);
-		Tempo.esperar(3000);
+		//Selenium.driver.get(Links.getLinkaldeia() + idAldeia);
 		Selenium.driver.get(linkCampo);
-
-		Long tempoMelhoria = 600000l;
+		Long tempoMelhoria = 3000l;
 		List<WebElement> elementosBt = Selenium.driver.findElements(By.tagName("button"));
 		for (WebElement obj : elementosBt) {
 
 			if (obj.getText().contains("Melhorar para nível")) {
+
 				tempoMelhoria = DadosAldeia.tempoDeMelhoria(idAldeia);
 				WebElement btMelhorar = Selenium.driver.findElement(By.id(obj.getAttribute("id")));
+				System.out.println("\n\n\nAchou" + btMelhorar);
 				btMelhorar.click();
+				Tempo.esperar(3000, "Confirmando Melhoria de Campo aldeia "+ idAldeia);
+				break;
+
 			}
 		}
 		return tempoMelhoria;
 	}
+
 	@Override
 	public String toString() {
 		return "Campo [nomeCampo=" + nomeCampo + ", nivelCampo=" + nivelCampo + ", nivelCampoAux=" + nivelCampoAux

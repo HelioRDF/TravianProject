@@ -27,10 +27,10 @@ public class CriarListaFarme {
 				System.out.println("\n\n\n\nLink=" + Links.getLinkrankpaginajogadores() + idPAgina);
 				System.out.println("\n\n\n\n-----------------------------------------------------------------\n\n\n\n");
 				idPAgina--;
-				Tempo.esperar(2000);
+				Tempo.esperar(2000, "Espera em verRank");
 			}
 		} catch (Exception e) {
-			Tempo.esperar(10000);
+			Tempo.esperar(10000, "Exception em CriarListaFarme");
 		}
 	}
 

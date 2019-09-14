@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import Config.Selenium;
+import Config.Tempo;
 import InfosTravian.Log;
 
 public class Edificio {
@@ -44,16 +46,31 @@ public class Edificio {
 
 	}
 
-	public static void confirmarMelhoriaInfra(WebDriver driver) {
-		List<WebElement> elementosBt = driver.findElements(By.tagName("button"));
+	public static void confirmarMelhoriaInfra() {
+		List<WebElement> elementosBt = Selenium.driver.findElements(By.tagName("button"));
 		for (WebElement obj : elementosBt) {
 			if (obj.getText().contains("Melhorar para nível")) {
-				WebElement btMelhorar = driver.findElement(By.id(obj.getAttribute("id")));
+				WebElement btMelhorar = Selenium.driver.findElement(By.id(obj.getAttribute("id")));
 
 				// System.out.println("Aqui:"+ obj.getAttribute("id"));
 				btMelhorar.click();
+				Tempo.esperar(3000, "Confirmando Melhoria de infra aldeia ");
+				break;
 			}
 		}
+	}
+	
+	public static void confirmarTreinamento(String tipoTropa, String quantidade) {
+		WebElement treinar = Selenium.driver.findElement(By.name("s1"));
+		
+		WebElement tropas =Selenium.driver.findElement(By.name(tipoTropa));
+		tropas.sendKeys("1");
+
+//		WebElement btSalvar = driver.findElement(By.name("save"));
+//		btSalvar.click();
+		
+		
+		treinar.submit();
 	}
 
 	public static Long tempoDeMelhoria(WebDriver driver, String estrutura, String idAldeia) {
@@ -80,7 +97,7 @@ public class Edificio {
 						minutosEspera = Long.parseLong(encontraMinutosList[1]);
 						minutosEspera = (minutosEspera * 60 * 1000) + 60000;
 						LocalTime horainicio = LocalTime.now();
-		
+
 						if (minutosEspera < 400000) {
 							minutosEspera = 400000;
 						}
